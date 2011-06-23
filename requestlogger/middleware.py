@@ -1,0 +1,2 @@
+class RequestLoggingMiddleware(object):
+    pass
