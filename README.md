@@ -13,7 +13,7 @@ Just install the module
 
 Add `requestlogger` to the `INSTALLED_APPS` settings and add `requestlogger.middleware.RequestLoggingMiddleware` to `MIDDLEWARE_CLASSES`. Then run `python manage.py syncdb` and, if you use `south`, `python manage.py migrate`.
 
-To see the gathered statistics, you'll need the 'django.contrib.admin` installed (you probably have already had it).
+To see the gathered statistics, you'll need the `django.contrib.admin` installed (you probably have already had it).
 
 Try opening a few pages on the website. Then open 'Requestlogger / Views' in the Admin, and see what data is available by default.
 
