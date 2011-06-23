@@ -122,6 +122,7 @@ INSTALLED_APPS = (
 
     'requestlogger',
     'south',
+    'rltests',
 )
 
 # A sample logging configuration. The only tangible logging
