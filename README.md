@@ -15,7 +15,7 @@ Add `requestlogger` to the `INSTALLED_APPS` settings and add `requestlogger.midd
 
 To see the gathered statistics, you'll need the `django.contrib.admin` installed (you probably have already had it).
 
-Try opening a few pages on the website. Then open 'Requestlogger / Views' in the Admin, and see what data is available by default.
+Try opening a few pages on the website. Then open 'Requestlogger / Requests' in the Admin, and see what data is available by default.
 
 ## Configuration
 
@@ -25,3 +25,8 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 
 * `all` (default) logs all requests to your database. Be careful to use it in production, since it can probably overwhelm your database. It does one `INSERT` query per request
 * `none` logs nothing, it's useful if you want to switch it off quickly
+* `paranoid` mode
+
+# Security implications
+
+# Performance implications
