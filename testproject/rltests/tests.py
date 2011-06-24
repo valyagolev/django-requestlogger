@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.conf import settings
 
 from requestlogger.models import Request
 
@@ -21,6 +22,24 @@ class RequestLoggerTestCase(TestCase):
         self.assertNotEquals(req.response_time, 0)
         self.assertEquals(req.status_code, 200)
 
+    def testItDoesNotIfSwitchedOff(self):
+        try:
+            settings.REQUEST_LOGGING_MODE = 'none'
+
+            self.client.get('/admin/')
+            self.client.get('/not_exists/')
+            
+            try:
+                self.client.get('/error500/')
+            except NotImplementedError:
+                pass
+
+            self.assertEquals(len(Request.objects.all()), 0)
+
+        finally:
+            settings.REQUEST_LOGGING_MODE = 'all'
+
+        
     def testItLogs404(self):
         self.client.get('/not_exists/')
         

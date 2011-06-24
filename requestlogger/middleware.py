@@ -1,9 +1,18 @@
 import datetime
 
+from django.conf import settings
+
 from .models import Request
 
 class RequestLoggingMiddleware(object):
+    @property
+    def logging_mode(self):
+        return getattr(settings, 'REQUEST_LOGGING_MODE', 'all')
+        
     def _save_log_entry(self, entry):
+        if self.logging_mode == 'none':
+            return
+        
         response_time = datetime.datetime.now() - entry.datetime
         
         entry.response_time = response_time.total_seconds()
