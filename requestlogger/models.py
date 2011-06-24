@@ -12,7 +12,13 @@ class Request(models.Model):
     status_code = models.IntegerField()
     exception_class = models.CharField(max_length=255, blank=True)
     exception_message = models.TextField(blank=True)
+    view_module = models.CharField(max_length=255, blank=True)
+    view_func = models.CharField(max_length=255, blank=True)
 
+    class Meta:
+        get_latest_by = 'datetime'
+    
     def __unicode__(self):
         return '%s %s, at %s' % (self.method, self.path, self.datetime)
+    
     

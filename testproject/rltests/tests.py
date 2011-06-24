@@ -70,6 +70,25 @@ class RequestLoggerTestCase(TestCase):
         self.assertEquals(req.exception_message, '500 error for testing')
 
 
+    def testItLogsView(self):
+        try:
+            self.client.get('/error500/')
+        except NotImplementedError:
+            pass
+
+        requests = Request.objects.all()
+        self.assertEquals(len(requests), 1)
+
+        req = requests[0]
+        self.assertEquals(req.view_module, 'testproject.views')
+        self.assertEquals(req.view_func, 'raise_error')
+
+        self.client.get('/class_based/')
+        req = Request.objects.latest()
+        self.assertEquals(req.view_module, 'testproject.views')
+        self.assertEquals(req.view_func, 'ClassBasedView')
+        
+
         
 
         

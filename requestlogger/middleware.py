@@ -7,6 +7,12 @@ from .models import Request
 class RequestLoggingMiddleware(object):
     @property
     def logging_mode(self):
+        """
+        Returns a logging mode
+
+        Made a property in case it suddenly changes
+        """
+        
         return getattr(settings, 'REQUEST_LOGGING_MODE', 'all')
         
     def _save_log_entry(self, entry):
@@ -30,6 +36,13 @@ class RequestLoggingMiddleware(object):
         
         request.request_log_entry = entry
 
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        """
+        Tells a log entry about a view
+        """
+        request.request_log_entry.view_module = view_func.__module__
+        request.request_log_entry.view_func = view_func.__name__
+
     def process_response(self, request, response):
         """
         Updates and saves a request log entry object
@@ -38,7 +51,7 @@ class RequestLoggingMiddleware(object):
         entry.status_code = response.status_code
 
         if entry.status_code == 500:
-            # TODO: Save an exception?
+            # TODO: Save an exception? Investigate if it does
             pass
 
         self._save_log_entry(entry)
@@ -53,4 +66,7 @@ class RequestLoggingMiddleware(object):
         entry.exception_message = exception.message
 
         self._save_log_entry(entry)
+        # TODO: Investigate if it saves an entry twice
+        # in devserver and realserver
+        # (it does not it tests)
         

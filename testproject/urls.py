@@ -4,11 +4,11 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-def raise_error(request):
-    raise NotImplementedError('500 error for testing')
+from .views import raise_error, ClassBasedView
 
 urlpatterns = patterns('',
     url(r'^error500/$', raise_error),
+    url(r'^class_based/$', ClassBasedView.as_view()),                   
     # Examples:
     # url(r'^$', 'testproject.views.home', name='home'),
     # url(r'^testproject/', include('testproject.foo.urls')),
