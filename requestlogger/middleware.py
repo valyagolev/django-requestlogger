@@ -37,6 +37,10 @@ class RequestLoggingMiddleware(object):
         entry = request.request_log_entry
         entry.status_code = response.status_code
 
+        if entry.status_code == 500:
+            # TODO: Save an exception?
+            pass
+
         self._save_log_entry(entry)
 
         return response
