@@ -4,7 +4,11 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+def raise_error(request):
+    raise NotImplementedError('500 error for testing')
+
 urlpatterns = patterns('',
+    url(r'^error500/$', raise_error),
     # Examples:
     # url(r'^$', 'testproject.views.home', name='home'),
     # url(r'^testproject/', include('testproject.foo.urls')),
@@ -13,5 +17,6 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+                           
     url(r'^admin/', include(admin.site.urls)),
 )
