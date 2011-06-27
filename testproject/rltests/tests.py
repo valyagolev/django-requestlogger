@@ -39,7 +39,7 @@ class RequestLoggerTestCase(TestCase):
         finally:
             settings.REQUEST_LOGGING_MODE = 'all'
 
-    def testItLogsOnlyNotExcludedThings(self):
+    def testItLogsOnlyNotExcludedUrls(self):
         try:
             settings.REQUEST_LOGGING_EXCLUDE_URLS = ['^/admin/']
 
@@ -53,6 +53,27 @@ class RequestLoggerTestCase(TestCase):
 
         finally:
             settings.REQUEST_LOGGING_EXCLUDE_URLS = []
+
+
+    def testAStrangeBug(self):
+        self.client.get('/class_based')
+
+            
+    def testExclusionOfViews(self):            
+        try:
+            settings.REQUEST_LOGGING_EXCLUDE_VIEWS = ['views\.ClassBased']
+
+            self.client.get('/class_based/')
+            self.client.get('/admin/')
+
+            self.assertEquals(len(Request.objects.all()), 1)
+
+            req, = Request.objects.all()
+
+            self.assertEquals(req.path, '/admin/')
+            
+        finally:
+            settings.REQUEST_LOGGING_EXCLUDE_VIEWS = []
         
     def testItLogs404(self):
         self.client.get('/not_exists/')

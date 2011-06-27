@@ -29,6 +29,10 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 
 `REQUEST_LOGGING_EXCLUDE_URLS` is a list of regular expressions (`['^/admin/', '^/favicon.ico']` by default). All requests to urls that match at least one of these won't be logged. Please note that, unlike the urlconf, there is a slash in the beginning of each path, so you should start your path with `^/` (if match from the beginning is needed).
 
+`REQUEST_LOGGING_EXCLUDE_VIEWS` is another list of regexps, but they are tested on the view name (with a module, like `django.views.generic.View`).
+
+Each one of these settings can be changed in runtime without restarting the django application.
+
 # Screenshots
 
 ![Views](http://f.cl.ly/items/2t0k1a110b3e2u2e0h33/Screen%20shot%202011-06-27%20at%207.25.08%20PM.png)

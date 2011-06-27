@@ -33,10 +33,11 @@ class View(models.Model):
     max_response_time = aggregated_column('max_response_time')
     request_count = aggregated_column('request_count')
 
-
     class Meta:
         unique_together = [('module', 'func')]
 
+    def total_name(self):
+        return '.'.join([self.module, self.func]).strip('.')
 
 class Request(models.Model):
     """Request log entry"""
