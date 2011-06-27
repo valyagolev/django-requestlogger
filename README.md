@@ -30,3 +30,7 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 # Security implications
 
 # Performance implications
+
+# Storage backends
+
+# Extending with your own parameters

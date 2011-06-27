@@ -2,7 +2,7 @@ import datetime
 
 from django.conf import settings
 
-from .models import Request
+from .models import Request, get_view_representation
 
 class RequestLoggingMiddleware(object):
     @property
@@ -40,8 +40,7 @@ class RequestLoggingMiddleware(object):
         """
         Tells a log entry about a view
         """
-        request.request_log_entry.view_module = view_func.__module__
-        request.request_log_entry.view_func = view_func.__name__
+        request.request_log_entry.view = get_view_representation(view_func)
 
     def process_response(self, request, response):
         """

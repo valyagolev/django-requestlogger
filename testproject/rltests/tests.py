@@ -80,16 +80,25 @@ class RequestLoggerTestCase(TestCase):
         self.assertEquals(len(requests), 1)
 
         req = requests[0]
-        self.assertEquals(req.view_module, 'testproject.views')
-        self.assertEquals(req.view_func, 'raise_error')
+        self.assertEquals(req.view.module, 'testproject.views')
+        self.assertEquals(req.view.func, 'raise_error')
 
         self.client.get('/class_based/')
         req = Request.objects.latest()
-        self.assertEquals(req.view_module, 'testproject.views')
-        self.assertEquals(req.view_func, 'ClassBasedView')
+        self.assertEquals(req.view.module, 'testproject.views')
+        self.assertEquals(req.view.func, 'ClassBasedView')
         
 
-        
+    def testItAggregates(self):
+        self.client.get('/class_based/')
+        self.client.get('/class_based/')
+        self.client.get('/class_based/')
 
+        r1, r2, r3 = Request.objects.all()
+
+        self.assertEquals(r1.view.module, 'testproject.views')
+        self.assertEquals(r2.view.func, 'ClassBasedView')
         
+        self.assertEquals(r1.view.pk, r2.view.pk)
+        self.assertEquals(r1.view.pk, r3.view.pk)
         
