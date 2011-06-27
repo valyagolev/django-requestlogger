@@ -29,6 +29,11 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 
 `REQUEST_LOGGING_EXCLUDE_URLS` is a list of regular expressions (`['^/admin/', '^/favicon.ico']` by default). All requests to urls that match at least one of these won't be logged. Please note that, unlike the urlconf, there is a slash in the beginning of each path, so you should start your path with `^/` (if match from the beginning is needed).
 
+# Screenshots
+
+![Views](http://f.cl.ly/items/2t0k1a110b3e2u2e0h33/Screen%20shot%202011-06-27%20at%207.25.08%20PM.png)
+![Requests](http://f.cl.ly/items/2V3m3c3e3Y1L3E331m1i/Screen%20shot%202011-06-27%20at%207.26.33%20PM.png)
+
 # Security implications
 
 # Performance implications
