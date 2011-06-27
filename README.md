@@ -27,6 +27,11 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 * `none` logs nothing, it's useful if you want to switch it off quickly
 * `paranoid` mode
 
+# Screenshots
+
+![Views](http://f.cl.ly/items/2t0k1a110b3e2u2e0h33/Screen%20shot%202011-06-27%20at%207.25.08%20PM.png)
+![Requests](http://f.cl.ly/items/2V3m3c3e3Y1L3E331m1i/Screen%20shot%202011-06-27%20at%207.26.33%20PM.png)
+
 # Security implications
 
 # Performance implications
