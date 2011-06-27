@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from django.conf import settings
 
@@ -14,9 +15,23 @@ class RequestLoggingMiddleware(object):
         """
         
         return getattr(settings, 'REQUEST_LOGGING_MODE', 'all')
+
+    @property
+    def excluded_urls(self):
+        return getattr(settings, 'REQUEST_LOGGING_EXCLUDE_URLS', ['^/admin/',
+                                                                  '^/favicon.ico'])
+
+    def should_log(self, entry):
+        if self.logging_mode == 'off':
+            return False
+        
+        if any(re.search(eu, entry.path) for eu in self.excluded_urls):
+            return False
+
+        return True
         
     def _save_log_entry(self, entry):
-        if self.logging_mode == 'none':
+        if not self.should_log(entry):
             return
         
         response_time = datetime.datetime.now() - entry.datetime

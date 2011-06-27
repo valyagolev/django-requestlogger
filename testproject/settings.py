@@ -145,3 +145,7 @@ LOGGING = {
         },
     }
 }
+
+
+REQUEST_LOGGING_MODE = 'all'
+REQUEST_LOGGING_EXCLUDE_URLS = ['^/favicon.ico']

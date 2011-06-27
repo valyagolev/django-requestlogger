@@ -24,7 +24,7 @@ class RequestLoggerTestCase(TestCase):
 
     def testItDoesNotIfSwitchedOff(self):
         try:
-            settings.REQUEST_LOGGING_MODE = 'none'
+            settings.REQUEST_LOGGING_MODE = 'off'
 
             self.client.get('/admin/')
             self.client.get('/not_exists/')
@@ -39,6 +39,20 @@ class RequestLoggerTestCase(TestCase):
         finally:
             settings.REQUEST_LOGGING_MODE = 'all'
 
+    def testItLogsOnlyNotExcludedThings(self):
+        try:
+            settings.REQUEST_LOGGING_EXCLUDE_URLS = ['^/admin/']
+
+            self.client.get('/admin/')
+            self.client.get('/not_exists/')
+
+            self.assertEquals(len(Request.objects.all()), 1)
+            req, = Request.objects.all()
+
+            self.assertEquals(req.path, '/not_exists/')
+
+        finally:
+            settings.REQUEST_LOGGING_EXCLUDE_URLS = []
         
     def testItLogs404(self):
         self.client.get('/not_exists/')

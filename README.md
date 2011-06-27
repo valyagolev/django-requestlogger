@@ -24,8 +24,10 @@ As you can see, `django-requestlogger` works out of the box, but you'll probably
 `REQUEST_LOGGING_MODE` is a string with one of these values:
 
 * `all` (default) logs all requests to your database. Be careful to use it in production, since it can probably overwhelm your database. It does one `INSERT` query per request
-* `none` logs nothing, it's useful if you want to switch it off quickly
+* `off` logs nothing, it's useful if you want to switch it off quickly
 * `paranoid` mode
+
+`REQUEST_LOGGING_EXCLUDE_URLS` is a list of regular expressions (`['^/admin/', '^/favicon.ico']` by default). All requests to urls that match at least one of these won't be logged. Please note that, unlike the urlconf, there is a slash in the beginning of each path, so you should start your path with `^/` (if match from the beginning is needed).
 
 # Security implications
 
